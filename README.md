@@ -3,7 +3,7 @@
 Module to connect a Raspberry Pi to Wi-Fi
 
 ## Installation
-	$ npm install rpi-wifi-connection --save
+	$ npm install git+https://github.com/sergei202/rpi-wifi-connection.git --save
 
 ## Usage
     var Wifi = require('rpi-wifi-connection');

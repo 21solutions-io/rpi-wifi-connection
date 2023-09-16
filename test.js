@@ -1,6 +1,17 @@
 var Wifi = require('./src/wifi-connection.js');
 var wifi = new Wifi({debug:true});
 
+async function test() {
+    const status = await wifi.getStatus();
+    console.log(status);
+}
+
+test();
+
+
+
+
+
 function switchNetworks() {
 
     Promise.resolve().then(() => {
@@ -55,4 +66,6 @@ function switchToInvalidNetwork() {
 }
 
 
-switchToInvalidNetwork();
+
+
+// switchToInvalidNetwork();

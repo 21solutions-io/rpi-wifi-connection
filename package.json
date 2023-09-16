@@ -1,6 +1,6 @@
 {
   "name": "rpi-wifi-connection",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "description": "Module to connect a Raspberry Pi to Wi-Fi",
   "main": "index.js",
   "scripts": {
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/meg768/rpi-wifi-connection.git"
+    "url": "git+https://github.com/sergei202/rpi-wifi-connection.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/meg768/rpi-wifi-connection/issues"
+    "url": "https://github.com/sergei202/rpi-wifi-connection/issues"
   },
-  "homepage": "https://github.com/meg768/rpi-wifi-connection#readme",
+  "homepage": "https://github.com/sergei202/rpi-wifi-connection#readme",
 
   "dependencies": {
       "sprintf-js": "^1.0.3"

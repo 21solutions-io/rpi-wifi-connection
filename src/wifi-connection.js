@@ -89,29 +89,32 @@ module.exports = class WiFiConnection {
     }
 
     getStatus() {
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
+            var status = {};
 
-            this.wpa_cli('status').then((output) => {
+            let output = await this.wpa_cli('status');
+            let match;
 
-                var match;
-                var status = {};
+            if ((match = output.match(/[^b]ssid=([^\n]+)/))) {
+                status.ssid = match[1];
+            }
 
-                if ((match = output.match(/[^b]ssid=([^\n]+)/))) {
-                    status.ssid = match[1];
-                }
+            if ((match = output.match(/ip_address=([^\n]+)/))) {
+                status.ip_address = match[1];
+            }
 
-                if ((match = output.match(/ip_address=([^\n]+)/))) {
-                    status.ip_address = match[1];
-                }
+            output = await this.wpa_cli('signal_poll');
+            if ((match = output.match(/RSSI=([^\n]+)/))) {
+                status.signalLevel = parseInt(match[1]);
+            }
 
-                resolve(status);
-            })
-            .catch((error) => {
-                reject(error);
-            })
+            resolve(status);
+
         });
 
     }
+
+
 
     getNetworks() {
         return new Promise((resolve, reject) => {
