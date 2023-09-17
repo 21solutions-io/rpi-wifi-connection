@@ -79,7 +79,7 @@ module.exports = class WiFiConnection {
         return new Promise((resolve, reject) => {
 
             this.getStatus().then((status) => {
-                resolve(isString(status.ip_address));
+                resolve(isString(status.ipAddress));
             })
 
             .catch((error) => {
@@ -89,10 +89,12 @@ module.exports = class WiFiConnection {
     }
 
     getStatus() {
+        debug('getStatus()');
         return new Promise(async (resolve, reject) => {
             var status = {};
 
             let output = await this.wpa_cli('status');
+            debug('getStatus: status output=' + JSON.stringify(output));
             let match;
 
             if ((match = output.match(/[^b]ssid=([^\n]+)/))) {
@@ -100,10 +102,11 @@ module.exports = class WiFiConnection {
             }
 
             if ((match = output.match(/ip_address=([^\n]+)/))) {
-                status.ip_address = match[1];
+                status.ipAddress = match[1];
             }
 
             output = await this.wpa_cli('signal_poll');
+            debug('getStatus: signal_pool output=' + JSON.stringify(output));
             if ((match = output.match(/RSSI=([^\n]+)/))) {
                 status.signalLevel = parseInt(match[1]);
             }
@@ -216,9 +219,9 @@ module.exports = class WiFiConnection {
 
                 self.getStatus().then((status) => {
 
-                    debug(sprintf('Connection status ssid=%s ip_address=%s ...', status.ssid || '', status.ip_address || ''));
+                    debug(sprintf('Connection status ssid=%s ipAddress=%s ...', status.ssid || '', status.ipAddress || ''));
                     
-                    if (isString(status.ip_address) && status.ssid == ssid) {
+                    if (isString(status.ipAddress) && status.ssid == ssid) {
                         return Promise.resolve();
                     }
                     else {
