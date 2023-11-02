@@ -1,13 +1,33 @@
-var Wifi = require('./src/wifi-connection.js');
-var wifi = new Wifi({debug:true});
+const Wifi = require('./src/wifi-connection.js');
+
+const wifi = new Wifi({iface:'wlp0s20f3', debug:true});
 
 async function test() {
-    const status = await wifi.getStatus();
-    console.log(status);
+    console.log('test()');
+    return Promise.all([
+        getStatus(),
+        // scan()
+    ]).then(results => {
+        console.log('results=%o', results);
+    });
+
 }
 
 test();
 
+async function getStatus() {
+    console.log('getStatus()')
+    const status = await wifi.getStatus();
+    console.log('getStatus: status=%o', status);
+    return status;
+}
+
+async function scan() {
+    console.log('scan()')
+    const networks = await wifi.scan();
+    console.log('scan: networks=%o', networks);
+    return networks;
+}
 
 
 
