@@ -325,7 +325,6 @@ module.exports = class WiFiConnection {
     }
 
     scan() {
-
         var self = this;
 
         function scan() {
@@ -350,14 +349,15 @@ module.exports = class WiFiConnection {
                 var ssids = [];
 
                 output.forEach((line) => {
+                    debug('line=%o', line);
                     var params = line.split('\t');
                     ssids.push({
                         bssid         : params[0],
                         frequency     : parseInt(params[1]),
                         signalLevel   : parseInt(params[2]),
+                        flags         : params[3],
                         ssid          : params[4]
                     });
-
                 });
                 resolve(ssids);
             })

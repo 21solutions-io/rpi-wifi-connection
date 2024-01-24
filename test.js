@@ -5,8 +5,8 @@ const wifi = new Wifi({iface:'wlp0s20f3', debug:true});
 async function test() {
     console.log('test()');
     return Promise.all([
-        getStatus(),
-        // scan()
+        // getStatus(),
+        scan()
     ]).then(results => {
         console.log('results=%o', results);
     });
