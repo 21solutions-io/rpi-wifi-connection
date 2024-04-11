@@ -122,8 +122,6 @@ module.exports = class WiFiConnection {
 
     }
 
-
-
     getNetworks() {
         return new Promise((resolve, reject) => {
 
@@ -152,6 +150,10 @@ module.exports = class WiFiConnection {
             })
         });
 
+    }
+
+    disconnect() {
+        this.wpa_cli(sprintf('disconnect'), '^OK');
     }
 
     connect(options) {

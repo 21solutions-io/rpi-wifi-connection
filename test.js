@@ -1,15 +1,17 @@
 const Wifi = require('./src/wifi-connection.js');
 
-const wifi = new Wifi({iface:'wlp0s20f3', debug:true});
+const wifi = new Wifi({iface:'wlo1', debug:true});
 
 async function test() {
     console.log('test()');
-    return Promise.all([
-        // getStatus(),
-        scan()
-    ]).then(results => {
-        console.log('results=%o', results);
-    });
+    // return Promise.all([
+    //     // getStatus(),
+    //     scan()
+    // ]).then(results => {
+    //     console.log('results=%o', results);
+    // });
+
+    wifi.disconnect();
 
 }
 
