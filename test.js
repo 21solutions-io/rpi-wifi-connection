@@ -1,6 +1,6 @@
 const Wifi = require('./src/wifi-connection.js');
 
-const wifi = new Wifi({iface:'wlo1', debug:true});
+const wifi = new Wifi({iface:'wlan0', debug:true});
 
 async function test() {
     console.log('test()');
@@ -11,7 +11,9 @@ async function test() {
     //     console.log('results=%o', results);
     // });
 
-    wifi.disconnect();
+    // wifi.disconnect();
+
+    await wifi.connect({ssid:'FBI Spy Van #3'});
 
 }
 

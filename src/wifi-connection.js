@@ -189,7 +189,9 @@ module.exports = class WiFiConnection {
 
         function setNetwork(id, name, value) {
             debug(sprintf('Setting variable %s=%s for network %d.', name, value, id));
-            if (typeof value === 'number') {
+            if (name === 'key_mgmt' && value === 'NONE') {
+                return self.wpa_cli(sprintf('set_network %d %s %s', id, name, value), '^OK');
+            } else if (typeof value === 'number') {
                 return self.wpa_cli(sprintf('set_network %d %s %d', id, name, value), '^OK');
             } else {
                 return self.wpa_cli(sprintf('set_network %d %s \'"%s"\'', id, name, value), '^OK');
@@ -289,7 +291,7 @@ module.exports = class WiFiConnection {
 
         return new Promise((resolve, reject) => {
 
-            var networkID = undefined;
+           let networkID = undefined;
 
             removeExistingNetworks().then(() => {
                 return addNetwork();
@@ -299,7 +301,11 @@ module.exports = class WiFiConnection {
                 return setNetwork(networkID, 'ssid', ssid);
             })
             .then(() => {
-                return (isString(password) ? setNetwork(networkID, 'psk', password) : Promise.resolve());
+                if (isString(password)) {
+                    return setNetwork(networkID, 'psk', password);
+                } else {
+                    return setNetwork(networkID, 'key_mgmt', 'NONE');
+                }
             })
             .then(() => {
                 return hidden ? setNetwork(networkID, 'scan_ssid', 1) : Promise.resolve();
